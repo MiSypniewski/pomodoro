@@ -38,6 +38,14 @@ class App extends React.Component {
     });
   };
 
+  handleRemoveTask = (id) => {
+    // event.preventDefault();
+    this.setState((prevState) => {
+      const tasks = prevState.tasks.filter((task) => task.id !== id);
+      return { tasks };
+    });
+  };
+
   render() {
     const { title, totalTimeInMinutes, tasks } = this.state;
     return (
@@ -49,7 +57,13 @@ class App extends React.Component {
           onClickAddTask={this.handleAddTask}
         />
         {tasks.map((task) => (
-          <Timebox key={task.id} title={task.title} totalTimeInMinutes={task.totalTimeInMinutes} />
+          <Timebox
+            key={task.id}
+            id={task.id}
+            title={task.title}
+            handleRemoveTask={this.handleRemoveTask}
+            totalTimeInMinutes={task.totalTimeInMinutes}
+          />
         ))}
       </>
     );

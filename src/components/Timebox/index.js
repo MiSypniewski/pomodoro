@@ -55,7 +55,7 @@ class Timebox extends React.Component {
 
   render() {
     const { isPaused, isRunning, pausesCount, elapsetTimeInSeconds } = this.state;
-    const { title, totalTimeInMinutes } = this.props;
+    const { title, totalTimeInMinutes, handleRemoveTask, id } = this.props;
     const totalTimeInSeconds = totalTimeInMinutes * 60;
     const timeLeftInSeconds = totalTimeInSeconds - elapsetTimeInSeconds;
     const minutesLeft = Math.floor(timeLeftInSeconds / 60);
@@ -76,6 +76,7 @@ class Timebox extends React.Component {
           {isPaused ? "Wznów" : "Pauzuj"}
         </button>
         Liczba przerw: {pausesCount}
+        <button onClick={() => handleRemoveTask(id)}>Usuń</button>
       </div>
     );
   }
