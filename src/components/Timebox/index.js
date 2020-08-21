@@ -1,29 +1,6 @@
 import React from "react";
-
-const isNumber = (number) => {
-  if (Number.isInteger(parseInt(number))) {
-    return number < 10 ? `0${number}` : `${number}`;
-  } else {
-    alert(`Podana wartość: ${number} nie jest liczbą!`);
-    return 99;
-  }
-};
-
-const Clock = ({ className = "", minutes = 20, seconds = 48 }) => {
-  return (
-    <h2 className={"Clock " + className}>
-      Pozostało {isNumber(minutes)}:{isNumber(seconds)}
-    </h2>
-  );
-};
-
-const ProgressBar = ({ className = "", percent = 33 }) => {
-  return (
-    <div className={"ProgressBar " + className}>
-      <div style={{ width: `${percent}%` }}></div>
-    </div>
-  );
-};
+import ProgressBar from "../ProgressBar";
+import Clock from "../Clock";
 
 class Timebox extends React.Component {
   constructor(props) {
@@ -46,7 +23,7 @@ class Timebox extends React.Component {
     window.clearInterval(this.intervalId);
   };
 
-  handleStart = (event) => {
+  handleStart = () => {
     this.setState({
       isRunning: true,
       elapsetTimeInSeconds: 0,
@@ -54,7 +31,7 @@ class Timebox extends React.Component {
     this.startTimer();
   };
 
-  handleStop = (event) => {
+  handleStop = () => {
     this.setState({
       isRunning: false,
       isPaused: false,
