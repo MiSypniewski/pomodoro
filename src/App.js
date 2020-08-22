@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import { v4 as uuid } from "uuid";
 import TimeboxEditor from "./components/TimeboxEditor";
 import Timebox from "./components/Timebox";
@@ -39,7 +38,6 @@ class App extends React.Component {
   };
 
   handleRemoveTask = (id) => {
-    // event.preventDefault();
     this.setState((prevState) => {
       const tasks = prevState.tasks.filter((task) => task.id !== id);
       return { tasks };

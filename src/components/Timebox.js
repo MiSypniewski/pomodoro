@@ -1,6 +1,6 @@
 import React from "react";
-import ProgressBar from "../ProgressBar";
-import Clock from "../Clock";
+import ProgressBar from "./ProgressBar";
+import Clock from "./Clock";
 
 class Timebox extends React.Component {
   constructor(props) {
@@ -8,14 +8,15 @@ class Timebox extends React.Component {
     this.state = {
       isRunning: false,
       isPaused: false,
+      isFinish: false,
       pausesCount: 0,
-      elapsetTimeInSeconds: 0,
+      elapsedTimeInSeconds: 0,
     };
   }
 
   startTimer = () => {
     this.intervalId = window.setInterval(() => {
-      this.setState((prevState) => ({ elapsetTimeInSeconds: prevState.elapsetTimeInSeconds + 0.1 }));
+      this.setState((prevState) => ({ elapsedTimeInSeconds: prevState.elapsedTimeInSeconds + 0.1 }));
     }, 100);
   };
 
@@ -26,7 +27,8 @@ class Timebox extends React.Component {
   handleStart = () => {
     this.setState({
       isRunning: true,
-      elapsetTimeInSeconds: 0,
+      isFinish: false,
+      // elapsedTimeInSeconds: 0,
     });
     this.startTimer();
   };
@@ -36,7 +38,7 @@ class Timebox extends React.Component {
       isRunning: false,
       isPaused: false,
       pausesCount: 0,
-      elapsetTimeInSeconds: 0,
+      elapsedTimeInSeconds: 0,
     });
     this.stopTimer();
   };
@@ -54,18 +56,28 @@ class Timebox extends React.Component {
   };
 
   render() {
-    const { isPaused, isRunning, pausesCount, elapsetTimeInSeconds } = this.state;
+    const { isPaused, isRunning, isFinish, pausesCount, elapsedTimeInSeconds } = this.state;
     const { title, totalTimeInMinutes, handleRemoveTask, id } = this.props;
     const totalTimeInSeconds = totalTimeInMinutes * 60;
-    const timeLeftInSeconds = totalTimeInSeconds - elapsetTimeInSeconds;
+    const timeLeftInSeconds = totalTimeInSeconds - elapsedTimeInSeconds;
     const minutesLeft = Math.floor(timeLeftInSeconds / 60);
     const secondsLeft = Math.floor(timeLeftInSeconds % 60);
-    const progressInPercent = (elapsetTimeInSeconds / totalTimeInSeconds) * 100;
+    const progressInPercent = (elapsedTimeInSeconds / totalTimeInSeconds) * 100;
+
+    if (timeLeftInSeconds <= 0 && !isFinish) {
+      this.setState((prevState) => {
+        this.stopTimer();
+        return {
+          isFinish: true,
+          elapsedTimeInSeconds: totalTimeInSeconds,
+        };
+      });
+    }
     return (
-      <div className="Timebox">
-        <h1 className={isPaused ? "inactive" : ""}>{title}</h1>
-        <Clock className={isPaused ? "inactive" : ""} minutes={minutesLeft} seconds={secondsLeft} />
-        <ProgressBar className={isPaused ? "inactive" : ""} percent={progressInPercent} />
+      <div className="timebox">
+        <h1 className={`timebox__title ${isPaused ? " timebox__title--inactive" : ""}`}>{title}</h1>
+        <Clock isPaused={isPaused} minutes={minutesLeft} seconds={secondsLeft} />
+        <ProgressBar isPaused={isPaused} percent={progressInPercent} />
         <button onClick={this.handleStart} disabled={isRunning}>
           Start
         </button>

@@ -9,9 +9,9 @@ const isNumber = (number) => {
   }
 };
 
-const Clock = ({ className = "", minutes = 20, seconds = 48 }) => {
+const Clock = ({ isPaused = false, minutes = 20, seconds = 48 }) => {
   return (
-    <h2 className={"Clock " + className}>
+    <h2 className={`Clock ${isPaused ? " Clock--inactive" : ""}`}>
       Pozostało {isNumber(minutes)}:{isNumber(seconds)}
     </h2>
   );

@@ -1,4 +1,8 @@
 @import "~normalize.css";
+@import "./styles/Timebox.scss";
+@import "./styles/TimeboxEditor.scss";
+@import "./styles/ProgressBar.scss";
+@import "./styles/Clock.scss";
 
 html {
   box-sizing: border-box;

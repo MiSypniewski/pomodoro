@@ -1,5 +1,4 @@
 import React from "react";
-import "./TimeboxEditor.scss";
 
 const TimeboxEditor = ({ onChangeInput, onClickAddTask, title, totalTimeInMinutes }) => {
   return (
