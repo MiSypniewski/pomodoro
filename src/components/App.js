@@ -1,7 +1,7 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-import TimeboxEditor from "./components/TimeboxEditor";
-import Timebox from "./components/Timebox";
+import TimeboxEditor from "./TimeboxEditor";
+import Timebox from "./Timebox";
 
 class App extends React.Component {
   state = {
