@@ -27,8 +27,6 @@ class Timebox extends React.Component {
   handleStart = () => {
     this.setState({
       isRunning: true,
-      isFinish: false,
-      // elapsedTimeInSeconds: 0,
     });
     this.startTimer();
   };
@@ -37,6 +35,7 @@ class Timebox extends React.Component {
     this.setState({
       isRunning: false,
       isPaused: false,
+      isFinish: false,
       pausesCount: 0,
       elapsedTimeInSeconds: 0,
     });
@@ -76,13 +75,13 @@ class Timebox extends React.Component {
     return (
       <div className="timebox">
         <h1 className={`timebox__title ${isPaused ? " timebox__title--inactive" : ""}`}>{title}</h1>
-        <Clock isPaused={isPaused} minutes={minutesLeft} seconds={secondsLeft} />
-        <ProgressBar isPaused={isPaused} percent={progressInPercent} />
+        <Clock isPaused={isPaused} isFinish={isFinish} minutes={minutesLeft} seconds={secondsLeft} />
+        <ProgressBar isPaused={isPaused} isFinish={isFinish} percent={progressInPercent} />
         <button onClick={this.handleStart} disabled={isRunning}>
           Start
         </button>
         <button onClick={this.handleStop} disabled={!isRunning}>
-          Stop
+          {isFinish ? "Wyzeruj" : "Stop"}
         </button>
         <button onClick={this.togglePause} disabled={!isRunning}>
           {isPaused ? "Wznów" : "Pauzuj"}

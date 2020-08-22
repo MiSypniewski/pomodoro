@@ -7,8 +7,14 @@
   &--inactive {
     filter: blur(2px) grayscale(1);
   }
-  > div {
+  &--finish {
+    border: 1px solid green;
+  }
+  &__procent {
     height: 100%;
     background-color: orangered;
+    &--finish {
+      background-color: green;
+    }
   }
 }
