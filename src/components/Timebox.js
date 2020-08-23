@@ -3,25 +3,26 @@ import ProgressBar from "./ProgressBar";
 import Clock from "./Clock";
 
 class Timebox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isRunning: false,
-      isPaused: false,
-      isFinish: false,
-      pausesCount: 0,
-      elapsedTimeInSeconds: 0,
-    };
-  }
+  state = {
+    isRunning: false,
+    isPaused: false,
+    isFinish: false,
+    pausesCount: 0,
+    elapsedTimeInSeconds: 0,
+  };
+  intervalId = null;
 
   startTimer = () => {
-    this.intervalId = window.setInterval(() => {
-      this.setState((prevState) => ({ elapsedTimeInSeconds: prevState.elapsedTimeInSeconds + 0.1 }));
-    }, 100);
+    if (this.intervalId === null) {
+      this.intervalId = window.setInterval(() => {
+        this.setState((prevState) => ({ elapsedTimeInSeconds: prevState.elapsedTimeInSeconds + 0.1 }));
+      }, 100);
+    }
   };
 
   stopTimer = () => {
     window.clearInterval(this.intervalId);
+    this.intervalId = null;
   };
 
   handleStart = () => {
