@@ -1,6 +1,7 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
 import Clock from "./Clock";
+import { getMinutesAndSecondsFromDurationInSeconds } from "../lib/CheckFunctions";
 
 class Timebox extends React.Component {
   state = {
@@ -60,12 +61,11 @@ class Timebox extends React.Component {
     const { title, totalTimeInMinutes, handleRemoveTask, id } = this.props;
     const totalTimeInSeconds = totalTimeInMinutes * 60;
     const timeLeftInSeconds = totalTimeInSeconds - elapsedTimeInSeconds;
-    const minutesLeft = Math.floor(timeLeftInSeconds / 60);
-    const secondsLeft = Math.floor(timeLeftInSeconds % 60);
     const progressInPercent = (elapsedTimeInSeconds / totalTimeInSeconds) * 100;
+    const [minutesLeft, secondsLeft] = getMinutesAndSecondsFromDurationInSeconds(timeLeftInSeconds);
 
     if (timeLeftInSeconds <= 0 && !isFinish) {
-      this.setState((prevState) => {
+      this.setState(() => {
         this.stopTimer();
         return {
           isFinish: true,

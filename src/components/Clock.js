@@ -1,13 +1,5 @@
 import React from "react";
-
-const isNumber = (number) => {
-  if (Number.isInteger(parseInt(number))) {
-    return number < 10 ? `0${number}` : `${number}`;
-  } else {
-    alert(`Podana wartość: ${number} nie jest liczbą!`);
-    return 99;
-  }
-};
+import { isNumber } from "../lib/CheckFunctions";
 
 const Clock = ({ isPaused = false, isFinish = false, minutes = 20, seconds = 48 }) => {
   return (
