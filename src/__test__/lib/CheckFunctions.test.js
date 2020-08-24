@@ -17,14 +17,6 @@ describe("isNumber", () => {
       expect(isNumber(`21`)).toBe("21");
     });
   });
-  describe("for numbers bigger than twenty-four", () => {
-    it("returns 99 for 25 number", () => {
-      expect(isNumber(25)).toBe("99");
-    });
-    it("returns 99 for 34 number", () => {
-      expect(isNumber(`34`)).toBe("99");
-    });
-  });
   describe("for not number variable", () => {
     it("returns 99 for not number", () => {
       expect(isNumber("zzzz")).toBe("99");

@@ -1,8 +1,6 @@
 const isNumber = (number) => {
   if (Number.isInteger(parseInt(number))) {
-    if (number < 10) return `0${number}`;
-    else if (number >= 10 && number <= 24) return `${number}`;
-    else return `99`;
+    return number < 10 ? `0${number}` : `${number}`;
   } else {
     // alert(`Podana wartość: ${number} nie jest liczbą!`);
     return `99`;
