@@ -5,8 +5,6 @@ import Timebox from "./Timebox";
 
 class App extends React.Component {
   state = {
-    title: "Ucze się wyciągać stan w góre :)",
-    totalTimeInMinutes: 3,
     tasks: [
       {
         id: uuid(),
@@ -16,23 +14,10 @@ class App extends React.Component {
     ],
   };
 
-  handleInputChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  handleAddTask = (event) => {
+  handleAddTask = (event, _task) => {
     event.preventDefault();
-    const { title, totalTimeInMinutes } = this.state;
-
-    const task = {
-      id: uuid(),
-      title: title,
-      totalTimeInMinutes: totalTimeInMinutes,
-    };
     this.setState((prevState) => {
-      const tasks = [task, ...prevState.tasks];
+      const tasks = [_task, ...prevState.tasks];
       return { tasks };
     });
   };
@@ -45,15 +30,10 @@ class App extends React.Component {
   };
 
   render() {
-    const { title, totalTimeInMinutes, tasks } = this.state;
+    const { tasks } = this.state;
     return (
       <>
-        <TimeboxEditor
-          title={title}
-          totalTimeInMinutes={totalTimeInMinutes}
-          onChangeInput={this.handleInputChange}
-          onClickAddTask={this.handleAddTask}
-        />
+        <TimeboxEditor onClickAddTask={this.handleAddTask} />
         {tasks.map((task) => (
           <Timebox
             key={task.id}
