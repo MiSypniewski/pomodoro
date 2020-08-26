@@ -13,7 +13,7 @@ class TimeboxEditor extends React.Component {
     });
   };
   render() {
-    const { title, totalTimeInMinutes, id } = this.state;
+    const { title, totalTimeInMinutes } = this.state;
     const { onClickAddTask } = this.props;
     return (
       <div className="TimeboxEditor">

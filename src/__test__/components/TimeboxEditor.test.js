@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent } from "@testing-library/react";
+import { render, cleanup, fireEvent, getByLabelText } from "@testing-library/react";
 import React from "react";
 import TimeboxEditor from "../../components/TimeboxEditor";
 
@@ -13,31 +13,34 @@ describe("<TimeboxEditor />", () => {
       const { getByText } = render(<TimeboxEditor />);
       getByText("Ile minut?");
     });
-    it("shows add button? ", () => {
+    it("shows add button ", () => {
       const { getByText } = render(<TimeboxEditor />);
       getByText("Dodaj");
     });
   });
   describe("add new element - type inputs and click button", () => {
-    // it("should ", () => {
-    //   const results = render(<TimeboxEditor />);
-    //   expect(results).toEqual();
-    // });
-
     it("types strings to inputs", () => {
-      const { debug, getByText, getByRole } = render(<TimeboxEditor />);
+      const onClickAddTask = jest.fn(() => {
+        const titleValue = getByLabelText(/co robisz?/i).value;
+        const timeValue = getByLabelText(/ile minut?/i).value;
 
-      const inputTitle = getByRole("textbox", { name: "Co robisz?" });
-      const inputTime = getByRole("spinbutton", { name: "Ile minut?" });
+        return {
+          title: titleValue,
+          time: timeValue,
+        };
+      });
+      const { getByText, getByLabelText } = render(<TimeboxEditor onClickAddTask={onClickAddTask} />);
+      const inputTitle = getByLabelText(/co robisz?/i);
+      const inputTime = getByLabelText(/ile minut?/i);
 
       fireEvent.change(inputTitle, { target: { value: "Uczyć się testów" } });
       fireEvent.change(inputTime, { target: { value: 30 } });
+      expect(inputTitle).toHaveValue("Uczyć się testów");
+      expect(inputTime).toHaveValue(30);
 
-      // fireEvent.click(getByText(/Dodaj/));
+      fireEvent.click(getByText(/Dodaj/));
 
-      // fireEvent.input(getByRole("textbox", { name: "Co robisz?" }), "Jebać tedego");
-
-      debug();
+      expect(onClickAddTask).toHaveReturnedWith({ time: "30", title: "Uczyć się testów" });
     });
   });
 });
