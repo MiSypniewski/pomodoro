@@ -18,8 +18,8 @@ describe("<TimeboxEditor />", () => {
       getByText("Dodaj");
     });
   });
-  describe("add new element - type inputs and click button", () => {
-    it("types strings to inputs", () => {
+  describe("add new element", () => {
+    it("types new value to inputs and click add button", () => {
       const onClickAddTask = jest.fn(() => {
         const titleValue = getByLabelText(/co robisz?/i).value;
         const timeValue = getByLabelText(/ile minut?/i).value;
